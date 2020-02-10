@@ -1,0 +1,23 @@
+/* This file is for your main application css. */
+
+@import "./phoenix.css";
+@import "../../../../deps/phoenix_live_view/assets/css/live_view.css";
+.cell {
+    float: left;
+    height: 50px;
+    width: 50px;
+    background-color: blue;
+}
+
+#wrapper {
+    display: inline-block;
+}
+
+#local-score {
+    margin: 20px;
+}
+
+#input-data {
+    width: 500px;
+    height: 40px;
+}

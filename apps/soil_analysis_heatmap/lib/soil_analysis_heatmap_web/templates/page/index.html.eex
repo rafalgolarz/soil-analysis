@@ -1,0 +1,10 @@
+<section class="phx-hero">
+  <h1><%= gettext "Water detection on Mars" %></h1>
+</section>
+
+<section class="row">
+  <article class="column">
+    <h2><a href="/heatmap">HeatMap</a></h2>
+
+  </article>
+</section>
