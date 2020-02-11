@@ -49,16 +49,12 @@ defmodule SoilAnalysis.Grid do
     Agent.stop(@pid_name)
   end
 
-  @doc """
-  getter for size of the grid
-  """
+  ### getter for size of the grid
   defp size do
     Agent.get(@pid_name, fn state -> state.size end)
   end
 
-  @doc """
-  getter for the list of concentration values
-  """
+  ### getter for the list of concentration values
   defp concentration do
     Agent.get(@pid_name, fn state -> state.concentration end)
   end
@@ -71,11 +67,9 @@ defmodule SoilAnalysis.Grid do
     Agent.get(@pid_name, fn state -> state.locations end)
   end
 
-  @doc """
-  at that stage we should have a validated list against size and values
-  let's turn a flat list to 2D grid with (x, y) coordinates
-  [1, 2, 3, 4] turns into %{{0, 0} => 1, {0, 1} => 2, {1, 0} => 3, {1, 1} => 4}
-  """
+  # at that stage we should have a validated list against size and values
+  # let's turn a flat list to 2D grid with (x, y) coordinates
+  # [1, 2, 3, 4] turns into %{{0, 0} => 1, {0, 1} => 2, {1, 0} => 3, {1, 1} => 4}
   defp build2D do
     edge = size() - 1
 
@@ -111,13 +105,12 @@ defmodule SoilAnalysis.Grid do
   defp validate_size(s), do: {:ok, s}
 
   defp validate_concentration(c) do
-    with true <- is_list(c),
-         true <- Enum.all?(c, &is_integer/1),
-         true <- Enum.all?(c, fn x -> x >= @minc && x <= @maxc end) do
+    if is_list(c) &&
+         Enum.all?(c, &is_integer/1) &&
+         Enum.all?(c, fn x -> x >= @minc && x <= @maxc end) do
       {:ok, c}
     else
-      _ ->
-        "concentration values must be a list of values in range of #{@minc}..#{@maxc}"
+      {:error, "concentration values must be a list of values in range of #{@minc}..#{@maxc}"}
     end
   end
 
